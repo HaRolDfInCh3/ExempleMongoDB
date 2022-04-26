@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.test.microservices.enums.TypeNews;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ public class News {
 	public String chapo;
 	public String texte;
 	public String photo;
-	public Object Type;
+	public TypeNews Type;
 	public String nom;
 	public String url;
 	public String legende;

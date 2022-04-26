@@ -12,61 +12,74 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.microservices.dto.LiensDto;
+import com.test.microservices.mappers.LiensDtoToLiens2;
 import com.test.microservices.pojos.Liens2;
 import com.test.microservices.repositories.Liens2Repository;
 
 @RestController
 public class Lien2Controller {
 	Liens2Repository liens2Repo;
-	public Lien2Controller(Liens2Repository repo) {
+	LiensDtoToLiens2 mapper;
+	public Lien2Controller(Liens2Repository repo,LiensDtoToLiens2 m) {
+		this.mapper=m;
 		this.liens2Repo=repo;
 		// TODO Auto-generated constructor stub
 	}
-@GetMapping("/getLiens2ByIdMongo/{id}")
-public ResponseEntity<Liens2> getLiens2( @PathVariable String id) {
+@GetMapping("/getLien2ByIdMongo/{id}")
+public ResponseEntity<LiensDto> getLien2( @PathVariable String id) {
 	if(liens2Repo.existsByIdMongo(id)) {
 		Liens2 ab=liens2Repo.findByIdMongo( id);
-		return new ResponseEntity<Liens2>(ab,HttpStatus.OK);
+		LiensDto dto=mapper.objectToDto(ab);
+		return new ResponseEntity<LiensDto>(dto,HttpStatus.OK);
 	}
-	return new ResponseEntity<Liens2>(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<LiensDto>(HttpStatus.NOT_FOUND);
 }
-@GetMapping("/getLiens2ById/{id}")
-public ResponseEntity<Liens2> getLiens2( @PathVariable int id) {
+@GetMapping("/getLien2ById/{id}")
+public ResponseEntity<LiensDto> getLien2( @PathVariable int id) {
 	if(liens2Repo.existsById(id)) {
 		Liens2 ab=liens2Repo.findById( id);
-		return new ResponseEntity<Liens2>(ab,HttpStatus.OK);
+		LiensDto dto=mapper.objectToDto(ab);
+		return new ResponseEntity<LiensDto>(dto,HttpStatus.OK);
 	}
-	return new ResponseEntity<Liens2>(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<LiensDto>(HttpStatus.NOT_FOUND);
 }
-@GetMapping("/getAllLiens2s")
-public ResponseEntity<List<Liens2>> getLiens2( ) {
+@GetMapping("/getAllLien2s")
+public ResponseEntity<List<LiensDto>> getLien2s( ) {
 	List<Liens2> lab=liens2Repo.findAll();
-	return new ResponseEntity<List<Liens2>>(lab,HttpStatus.OK);
+	List<LiensDto> ldto=mapper.objectsToDtos(lab);
+	return new ResponseEntity<List<LiensDto>>(ldto,HttpStatus.OK);
 }
-@PostMapping("/addLiens2")
-public ResponseEntity<Liens2> addLiens2(@RequestBody Liens2 ab) {
-	if(!liens2Repo.existsById(ab.getId())) {
+@PostMapping("/addLien2")
+public ResponseEntity<LiensDto> addLien2(@RequestBody LiensDto dto) {
+	if(!liens2Repo.existsById(dto.getId())) {
+		Liens2 ab=mapper.dtoToObject(dto);
 		liens2Repo.save(ab);
-		return new ResponseEntity<Liens2>(ab,HttpStatus.CREATED);
+		
+		return new ResponseEntity<LiensDto>(dto,HttpStatus.CREATED);
 	}
-	return new ResponseEntity<Liens2>(HttpStatus.CONFLICT);
+	return new ResponseEntity<LiensDto>(HttpStatus.CONFLICT);
 }
-@PutMapping("/updateLiens2/{id}")
-public ResponseEntity<Liens2> updateLiens2(@PathVariable int id,@RequestBody Liens2 ab) {
+@PutMapping("/updateLien2/{id}")
+public ResponseEntity<LiensDto> updateLien2(@PathVariable int id,@RequestBody LiensDto dto) {
 	if(liens2Repo.existsById(id)) {
+		Liens2 ab=mapper.dtoToObject(dto);
 		liens2Repo.save(ab);
-		return new ResponseEntity<Liens2>(ab,HttpStatus.OK);
+		
+		return new ResponseEntity<LiensDto>(dto,HttpStatus.OK);
 	}
-	return new ResponseEntity<Liens2>(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<LiensDto>(HttpStatus.NOT_FOUND);
 }
-@DeleteMapping("/deleteLiens2/{id}")
-public ResponseEntity<Liens2> deleteLiens2(@PathVariable int id) {
+@DeleteMapping("/deleteLien2/{id}")
+public ResponseEntity<LiensDto> deleteLien2(@PathVariable int id) {
 	if(liens2Repo.existsById(id)) {
 		Liens2 ab=liens2Repo.deleteById(id);
-		return new ResponseEntity<Liens2>(ab,HttpStatus.OK);
+		LiensDto dto=mapper.objectToDto(ab);
+		return new ResponseEntity<LiensDto>(dto,HttpStatus.OK);
 	}
-	return new ResponseEntity<Liens2>(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<LiensDto>(HttpStatus.NOT_FOUND);
 }
+
 
 
 }

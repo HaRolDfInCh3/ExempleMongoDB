@@ -27,31 +27,34 @@ public class VideosController {
 		// TODO Auto-generated constructor stub
 	}
 @GetMapping("/getVideoByIdMongo/{id}")
-public ResponseEntity<Video> getVideo( @PathVariable String id) {
+public ResponseEntity<VideoDto> getVideo( @PathVariable String id) {
 	if(videoRepo.existsByIdMongo(id)) {
 		Video ab=videoRepo.findByIdMongo( id);
-		return new ResponseEntity<Video>(ab,HttpStatus.OK);
+		VideoDto dto=mapper.objectToDto(ab);
+		return new ResponseEntity<VideoDto>(dto,HttpStatus.OK);
 	}
-	return new ResponseEntity<Video>(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<VideoDto>(HttpStatus.NOT_FOUND);
 }
 @GetMapping("/getVideoById/{id}")
-public ResponseEntity<Video> getVideo( @PathVariable int id) {
+public ResponseEntity<VideoDto> getVideo( @PathVariable int id) {
 	if(videoRepo.existsById(id)) {
 		Video ab=videoRepo.findById( id);
-		return new ResponseEntity<Video>(ab,HttpStatus.OK);
+		VideoDto dto=mapper.objectToDto(ab);
+		return new ResponseEntity<VideoDto>(dto,HttpStatus.OK);
 	}
-	return new ResponseEntity<Video>(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<VideoDto>(HttpStatus.NOT_FOUND);
 }
 @GetMapping("/getAllVideos")
-public ResponseEntity<List<Video>> getVideo( ) {
+public ResponseEntity<List<VideoDto>> getVideo( ) {
 	List<Video> lab=videoRepo.findAll();
-	return new ResponseEntity<List<Video>>(lab,HttpStatus.OK);
+	List <VideoDto>ldto=mapper.objectsToDtos(lab);
+	return new ResponseEntity<List<VideoDto>>(ldto,HttpStatus.OK);
 }
 @PostMapping("/addVideo")
 public ResponseEntity<VideoDto> addVideo(@RequestBody VideoDto ab) {
 	if(!videoRepo.existsById(ab.getId())) {
 		Video v=mapper.dtoToObject(ab);
-		//videoRepo.save(v);
+		videoRepo.save(v);
 		System.out.println("videoDto : "+ab);
 		System.out.println("video : "+v);
 		return new ResponseEntity<VideoDto>(ab,HttpStatus.CREATED);
@@ -62,7 +65,7 @@ public ResponseEntity<VideoDto> addVideo(@RequestBody VideoDto ab) {
 public ResponseEntity<VideoDto> updateVideo(@PathVariable int id,@RequestBody VideoDto ab) {
 	if(videoRepo.existsById(id)) {
 		Video objet=mapper.dtoToObject(ab);
-		//videoRepo.save(objet);
+		videoRepo.save(objet);
 		System.out.println("videoDto : "+ab);
 		System.out.println("video : "+objet);
 		return new ResponseEntity<VideoDto>(ab,HttpStatus.OK);
@@ -70,12 +73,13 @@ public ResponseEntity<VideoDto> updateVideo(@PathVariable int id,@RequestBody Vi
 	return new ResponseEntity<VideoDto>(HttpStatus.NOT_FOUND);
 }
 @DeleteMapping("/deleteVideo/{id}")
-public ResponseEntity<Video> deleteVideo(@PathVariable int id) {
+public ResponseEntity<VideoDto> deleteVideo(@PathVariable int id) {
 	if(videoRepo.existsById(id)) {
 		Video ab=videoRepo.deleteById(id);
-		return new ResponseEntity<Video>(ab,HttpStatus.OK);
+		VideoDto dto=mapper.objectToDto(ab);
+		return new ResponseEntity<VideoDto>(dto,HttpStatus.OK);
 	}
-	return new ResponseEntity<Video>(HttpStatus.NOT_FOUND);
+	return new ResponseEntity<VideoDto>(HttpStatus.NOT_FOUND);
 }
 
 

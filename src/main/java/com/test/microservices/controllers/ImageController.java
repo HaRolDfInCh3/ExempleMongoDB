@@ -16,9 +16,9 @@ import com.test.microservices.pojos.Image;
 import com.test.microservices.repositories.ImagesRepository;
 
 @RestController
-public class ImagesController {
+public class ImageController {
 	ImagesRepository imageRepo;
-	public ImagesController(ImagesRepository repo) {
+	public ImageController(ImagesRepository repo) {
 		this.imageRepo=repo;
 		// TODO Auto-generated constructor stub
 	}
