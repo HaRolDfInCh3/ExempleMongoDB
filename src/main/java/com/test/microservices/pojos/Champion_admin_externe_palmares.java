@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.test.microservices.enums.IntituleCompetitionFrancais;
-import com.test.microservices.enums.TypeChampionAdminExterneJournal;
 import com.test.microservices.enums.TypeCompetition;
 
 import lombok.AllArgsConstructor;
