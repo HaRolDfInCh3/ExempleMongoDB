@@ -10,5 +10,5 @@ public class LienscategorieDto {
 	private String idMongo;
 	private int id;
 	public String categorie;
-	public String eng_categorie;
+	public String eNG_categorie;
 }
