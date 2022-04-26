@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Article_Dto {
+public class ArticleDto {
 	private String idMongo;
 	public int id;
 	public String nom;
