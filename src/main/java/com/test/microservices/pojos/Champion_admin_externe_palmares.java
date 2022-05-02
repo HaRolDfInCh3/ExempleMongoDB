@@ -1,6 +1,9 @@
 package com.test.microservices.pojos;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -20,11 +23,12 @@ public class Champion_admin_externe_palmares {
 	public String idMongo;
 	@Field("ID")
 	public int id;
+	
 	public String Rang;
 	public int ChampionID;
 	public String PoidsID;
-	public java.util.Date date;
-	public String CategorieAge;
+	public Date date;
+	public int CategorieAge;
 	public TypeCompetition CompetitionType;
 	public String CompetitionLieu;
 	public int CompetitionDepID;

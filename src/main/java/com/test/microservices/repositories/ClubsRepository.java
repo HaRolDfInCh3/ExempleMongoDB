@@ -7,6 +7,8 @@ import com.test.microservices.pojos.Club;
 public interface ClubsRepository extends MongoRepository<Club, String> {
 	public Club findById(int id2);
 	public Boolean existsById(int id2);
+	public Club findByClub(String club);
+	public Boolean existsByClub(String club);
 	public Club findByIdMongo(String idMongo);
 	public Boolean existsByIdMongo(String idMongo);
 	public Club deleteById(int id2);

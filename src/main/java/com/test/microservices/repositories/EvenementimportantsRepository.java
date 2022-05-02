@@ -2,12 +2,12 @@ package com.test.microservices.repositories;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.test.microservices.pojos.Evenementimportants;
+import com.test.microservices.pojos.Evenementimportant;
 
-public interface EvenementimportantsRepository extends MongoRepository<Evenementimportants, String> {
-	public Evenementimportants findById(int id2);
+public interface EvenementimportantsRepository extends MongoRepository<Evenementimportant, String> {
+	public Evenementimportant findById(int id2);
 	public Boolean existsById(int id2);
-	public Evenementimportants findByIdMongo(String idMongo);
+	public Evenementimportant findByIdMongo(String idMongo);
 	public Boolean existsByIdMongo(String idMongo);
-	public Evenementimportants deleteById(int id2);
+	public Evenementimportant deleteById(int id2);
 }

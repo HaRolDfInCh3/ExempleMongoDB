@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Document("evenementimportants")
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Evenementimportants {
+public class Evenementimportant {
 	@Id
 	private String idMongo;
 	@Field("ID")
