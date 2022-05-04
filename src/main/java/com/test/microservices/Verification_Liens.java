@@ -20,12 +20,12 @@ import com.test.microservices.pojos.*;
 import com.test.microservices.repositories.*;
 @Component
 public class Verification_Liens {
-	public Verification_Liens(EvenementsRepository s,PaysRepository d) {
+	public Verification_Liens(VideosRepository s,EvenementsRepository d) {
 		this.destRepo=d;
 		this.srcRepo=s;
 		try {
 			document = new Document();
-			PdfWriter.getInstance(document, new FileOutputStream("./Rapports/Evenement_vers_Pays.pdf"));
+			PdfWriter.getInstance(document, new FileOutputStream("./Rapports/Video_vers_Evenement.pdf"));
 			document.open();
 			document.addTitle("Rapport");
 		    document.addSubject("verifier la validite des references");
@@ -37,13 +37,13 @@ public class Verification_Liens {
 		    PdfPCell c1 = new PdfPCell(new Phrase("Erreur n°"));
 	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(c1);
-		    c1 = new PdfPCell(new Phrase("Id Evenement"));
+		    c1 = new PdfPCell(new Phrase("Id Video"));
 	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(c1);
-	        c1 = new PdfPCell(new Phrase("Id Mongo Evenement"));
+	        c1 = new PdfPCell(new Phrase("Id Mongo Video"));
 	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(c1);
-	        c1 = new PdfPCell(new Phrase("Id Pays"));
+	        c1 = new PdfPCell(new Phrase("Id Evenement"));
 	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(c1);
 	        table.setHeaderRows(1);
@@ -52,7 +52,7 @@ public class Verification_Liens {
 			
 			font1 = FontFactory.getFont(FontFactory.COURIER, 18, BaseColor.RED);
 			font2 = FontFactory.getFont(FontFactory.COURIER, 12, BaseColor.BLUE);
-			document.add(new Chunk("Evenement vers Pays:", font).setUnderline(0.1f, -2f));
+			document.add(new Chunk("Video vers Evenement:", font).setUnderline(0.1f, -2f));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,22 +62,22 @@ public class Verification_Liens {
 	Font font, font1,font2,font3;
 	Document document;
 	PdfPTable table;
-	EvenementsRepository srcRepo;
-	PaysRepository destRepo;
+	VideosRepository srcRepo;
+	EvenementsRepository destRepo;
 	int trouves;
 	int nontrouves;
  public void check() throws Exception{
-	 List<Evenement> tous=srcRepo.findAll();
-	 for(Evenement element:tous) {
-		 if(destRepo.existsByAbreviation(element.getPaysID())) {
+	 List<Video> tous=srcRepo.findAll();
+	 for(Video element:tous) {
+		 if(destRepo.existsById(element.getEvenement_id())) {
 			 trouves++;
 		 }
 		 else {
 			 nontrouves++;
-			 table.addCell(String.valueOf(nontrouves));
 			 table.addCell(String.valueOf(element.getId()));
+			 table.addCell(String.valueOf(nontrouves));
 			 table.addCell(element.getIdMongo());
-			 table.addCell(String.valueOf(element.getPaysID()));
+			 table.addCell(String.valueOf(element.getEvenement_id()));
 			 
 		 }
 	 }

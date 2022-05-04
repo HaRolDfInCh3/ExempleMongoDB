@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 public class Membre {
 	@Id
 	private String idMongo;
-	@Field("user_id")
+	@Field("id")
 	public int id;
+	public int user_id;
 	public String date_naissance;
 	public java.util.Date date_naissance2;
 	public String grade;

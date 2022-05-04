@@ -302,3 +302,115 @@ System.out.println("Tous les rest controllers ont étés exposés !");
 		
 	}
 	System.out.println("traites: "+total);
+	
+	
+	
+	
+	
+mercredi 04/05/2022  creation des relations DocumentReference
+package com.test.microservices;
+
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+import com.test.microservices.pojos.GroceryClient;
+import com.test.microservices.pojos.GroceryItem;
+import com.test.microservices.repositories.GroceryClientRepository;
+import com.test.microservices.repositories.GroceryItemRepository;
+
+
+
+
+
+@EnableMongoRepositories
+@SpringBootApplication
+
+public class ExempleMongodbApplication implements CommandLineRunner{
+	@Autowired
+	MongoTemplate template;
+	@Autowired
+	GroceryItemRepository iR;
+	@Autowired
+	GroceryClientRepository cR;
+	Verification_Liens v;
+	public static void main(String[] args) {
+		SpringApplication.run(ExempleMongodbApplication.class, args);
+	}
+	
+public void run(String... args) throws Exception{
+
+	System.out.println("Tous les rest controllers ont étés exposés ...");
+	//v.check();
+	//create();
+	getAndDisplayClients();
+    }
+
+public void create() {
+
+	GroceryClient cl1=new GroceryClient("cl1", "German Tedzela", 30, "Depute",null);	
+	GroceryClient cl2=new GroceryClient("cl2", "Linda Novia", 18, "Manequin de charmes",null);	
+	GroceryClient cl3=new GroceryClient("cl3", "Demi Luna", 24, "Actrice Porno",null);	
+	GroceryClient cl4=new GroceryClient("cl4", "Lisandro Martinez", 23, "Footballeur",null);	
+	GroceryClient cl5=new GroceryClient("cl5", "Pablo Gavilan", 18, "FootBaller",null);	
+	GroceryItem it2=new GroceryItem("ti2","Gode Michet",4000,"Sex toys",null);
+	GroceryItem it1=new GroceryItem("it1","Ballon de foot x123",2000,"Sport",null);
+	iR.save(it1);
+	iR.save(it2);
+	cR.save(cl1);
+	cR.save(cl2);
+	cR.save(cl3);
+	cR.save(cl4);
+	cR.save(cl5);
+	//creation des relations
+	addClientToItem(it1,cl1);
+	addClientToItem(it1,cl4);
+	addClientToItem(it1,cl5);
+	addClientToItem(it2,cl2);
+	addClientToItem(it2,cl3);
+	addItemToClient(cl1, it1);
+	addItemToClient(cl4, it1);
+	addItemToClient(cl5, it1);
+	addItemToClient(cl2, it2);
+	addItemToClient(cl3, it2);
+	System.out.println("articles crées ...");
+}
+public void addClientToItem(GroceryItem i,GroceryClient c) {
+	template.update(GroceryItem.class)
+    .matching(Criteria.where("id").is(i.getId()))
+    .apply(new Update().push("clients",c))
+    .first();
+}
+public void addItemToClient(GroceryClient c,GroceryItem i) {
+	template.update(GroceryClient.class)
+    .matching(Criteria.where("id").is(c.getId()))
+    .apply(new Update().set("item",i))
+    .first();
+}
+public void getAndDisplayItems() {
+	List<GroceryItem>items=iR.findAll();
+	for(GroceryItem item:items) {
+		System.out.println(item);
+		System.out.println("     ------    ");
+	}
+	System.out.println("Recuperation et Affichage d'items teminés...");
+}
+public void getAndDisplayClients() {
+	List<GroceryClient>clients=cR.findAll();
+	for(GroceryClient client:clients) {
+		System.out.println(client+" : "+client.item.getDesignation());
+		System.out.println("     ------    ");
+	}
+	System.out.println("Recuperation et Affichage de clients teminés...");
+}
+
+}
