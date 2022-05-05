@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.UserDto;
 import com.test.microservices.mappers.UserDtoToUser;
 import com.test.microservices.pojos.User;
-import com.test.microservices.repositories.UsersRepository;
+import com.test.microservices.repositories.UserRepository;
 
 @RestController
 public class UserController {
-	UsersRepository userRepo;
+	UserRepository userRepo;
 	UserDtoToUser mapper;
-	public UserController(UsersRepository repo,UserDtoToUser m) {
+	public UserController(UserRepository repo,UserDtoToUser m) {
 		this.userRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

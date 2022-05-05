@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.DepartementDto;
 import com.test.microservices.mappers.DepartementDtoToDepartement;
 import com.test.microservices.pojos.Departement;
-import com.test.microservices.repositories.DepartementsRepository;
+import com.test.microservices.repositories.DepartementRepository;
 @RestController
 public class DepartementController {
 	DepartementDtoToDepartement mapper;
-	DepartementsRepository depRepo;
-	public DepartementController(DepartementsRepository repo,DepartementDtoToDepartement m) {
+	DepartementRepository depRepo;
+	public DepartementController(DepartementRepository repo,DepartementDtoToDepartement m) {
 		this.depRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

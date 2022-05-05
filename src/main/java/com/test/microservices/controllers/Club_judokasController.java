@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.Club_judokaDto;
 import com.test.microservices.mappers.Club_judokaDtoToClub_judoka;
 import com.test.microservices.pojos.Club_judoka;
-import com.test.microservices.repositories.Club_JudokaRepository;
+import com.test.microservices.repositories.Club_judokaRepository;
 @RestController
 public class Club_judokasController {
 	Club_judokaDtoToClub_judoka mapper;
-	Club_JudokaRepository club_judokaRepo;
-	public Club_judokasController(Club_JudokaRepository repo,Club_judokaDtoToClub_judoka m) {
+	Club_judokaRepository club_judokaRepo;
+	public Club_judokasController(Club_judokaRepository repo,Club_judokaDtoToClub_judoka m) {
 		this.club_judokaRepo=repo;
 		this.mapper=m;
 	}

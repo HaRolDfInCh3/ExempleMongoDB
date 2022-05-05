@@ -2,6 +2,7 @@ package com.test.microservices.pojos;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.*;
@@ -14,5 +15,7 @@ public class Article_img {
 	@Field("id")
 	public int id;
 	public int id_art;
+	@DocumentReference
+	private Article article2;
 	public String nom;
 }

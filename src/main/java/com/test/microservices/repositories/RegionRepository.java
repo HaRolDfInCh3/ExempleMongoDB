@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.test.microservices.pojos.Region;
 
-public interface RegionsRepository extends MongoRepository<Region, String> {
+public interface RegionRepository extends MongoRepository<Region, String> {
 	public Region findById(int id2);
 	public Boolean existsById(int id2);
 	public Region findByIdMongo(String Id);

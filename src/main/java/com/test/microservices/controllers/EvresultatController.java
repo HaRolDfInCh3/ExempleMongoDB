@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.EvresultatDto;
 import com.test.microservices.mappers.EvresultatDtoToEvresultat;
 import com.test.microservices.pojos.Evresultat;
-import com.test.microservices.repositories.EvresultatsRepository;
+import com.test.microservices.repositories.EvresultatRepository;
 
 @RestController
 public class EvresultatController {
 	EvresultatDtoToEvresultat mapper;
-	EvresultatsRepository objetRepo;
-	public EvresultatController(EvresultatsRepository repo,EvresultatDtoToEvresultat m) {
+	EvresultatRepository objetRepo;
+	public EvresultatController(EvresultatRepository repo,EvresultatDtoToEvresultat m) {
 		this.objetRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

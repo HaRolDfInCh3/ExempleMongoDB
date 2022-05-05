@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.test.microservices.pojos.Club_horaire;
 
-public interface Club_horairesRepository extends MongoRepository<Club_horaire, String> {
+public interface Club_horaireRepository extends MongoRepository<Club_horaire, String> {
 	public Club_horaire findById(int id2);
 	public Boolean existsById(int id2);
 	public Club_horaire findByIdMongo(String idMongo);

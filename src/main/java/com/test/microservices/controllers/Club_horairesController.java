@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.Club_horaireDto;
 import com.test.microservices.mappers.Club_horaireDtoToClub_horaire;
 import com.test.microservices.pojos.Club_horaire;
-import com.test.microservices.repositories.Club_horairesRepository;
+import com.test.microservices.repositories.Club_horaireRepository;
 @RestController
 public class Club_horairesController {
 	Club_horaireDtoToClub_horaire mapper;
-	Club_horairesRepository club_horaireRepo;
-	public Club_horairesController(Club_horairesRepository repo,Club_horaireDtoToClub_horaire m) {
+	Club_horaireRepository club_horaireRepo;
+	public Club_horairesController(Club_horaireRepository repo,Club_horaireDtoToClub_horaire m) {
 		this.club_horaireRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

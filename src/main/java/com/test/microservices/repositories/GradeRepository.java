@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.test.microservices.pojos.Grade;
 
-public interface GradesRepository extends MongoRepository<Grade, String> {
+public interface GradeRepository extends MongoRepository<Grade, String> {
 	public Grade findById(int id2);
 	public Boolean existsById(int id2);
 	@Query("{'nom' : {$regex:'?0', '$options' : 'i'}}")

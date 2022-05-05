@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.test.microservices.pojos.Video;
 
-public interface VideosRepository extends MongoRepository<Video, String> {
+public interface VideoRepository extends MongoRepository<Video, String> {
 	public Video findById(int id2);
 	public Boolean existsById(int id2);
 	public Video findByIdMongo(String Id);

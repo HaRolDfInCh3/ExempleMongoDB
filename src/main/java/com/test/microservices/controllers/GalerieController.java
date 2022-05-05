@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.GalerieDto;
 import com.test.microservices.mappers.GalerieDtoToGalerie;
 import com.test.microservices.pojos.Galerie;
-import com.test.microservices.repositories.GaleriesRepository;
+import com.test.microservices.repositories.GalerieRepository;
 @RestController
 public class GalerieController {
 	GalerieDtoToGalerie mapper;
-	GaleriesRepository objetRepo;
-	public GalerieController(GaleriesRepository repo,GalerieDtoToGalerie m) {
+	GalerieRepository objetRepo;
+	public GalerieController(GalerieRepository repo,GalerieDtoToGalerie m) {
 		this.objetRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

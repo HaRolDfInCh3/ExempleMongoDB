@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.test.microservices.pojos.Galerie;
 
-public interface GaleriesRepository extends MongoRepository<Galerie, String> {
+public interface GalerieRepository extends MongoRepository<Galerie, String> {
 	public Galerie findById(int id2);
 	public Boolean existsById(int id2);
 	public Galerie findByIdMongo(String idMongo);

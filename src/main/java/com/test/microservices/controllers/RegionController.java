@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.RegionDto;
 import com.test.microservices.mappers.RegionDtoToRegion;
 import com.test.microservices.pojos.Region;
-import com.test.microservices.repositories.RegionsRepository;
+import com.test.microservices.repositories.RegionRepository;
 
 @RestController
 public class RegionController {
-	RegionsRepository regionRepo;
+	RegionRepository regionRepo;
 	RegionDtoToRegion mapper;
-	public RegionController(RegionsRepository repo,RegionDtoToRegion m) {
+	public RegionController(RegionRepository repo,RegionDtoToRegion m) {
 		this.regionRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

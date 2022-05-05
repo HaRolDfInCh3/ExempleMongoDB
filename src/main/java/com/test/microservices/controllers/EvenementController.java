@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.EvenementDto;
 import com.test.microservices.mappers.EvenementDtoToEvenement;
 import com.test.microservices.pojos.Evenement;
-import com.test.microservices.repositories.EvenementsRepository;
+import com.test.microservices.repositories.EvenementRepository;
 @RestController
 public class EvenementController {
 	EvenementDtoToEvenement mapper;
-	EvenementsRepository objetRepo;
-	public EvenementController(EvenementsRepository repo,EvenementDtoToEvenement m) {
+	EvenementRepository objetRepo;
+	public EvenementController(EvenementRepository repo,EvenementDtoToEvenement m) {
 		this.objetRepo=repo;
 		this.mapper=m;
 	}

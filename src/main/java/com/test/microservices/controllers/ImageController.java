@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.ImageDto;
 import com.test.microservices.mappers.ImageDtoToImage;
 import com.test.microservices.pojos.Image;
-import com.test.microservices.repositories.ImagesRepository;
+import com.test.microservices.repositories.ImageRepository;
 
 @RestController
 public class ImageController {
 	ImageDtoToImage mapper;
-	ImagesRepository objetRepo;
-	public ImageController(ImagesRepository repo,ImageDtoToImage m) {
+	ImageRepository objetRepo;
+	public ImageController(ImageRepository repo,ImageDtoToImage m) {
 		this.objetRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

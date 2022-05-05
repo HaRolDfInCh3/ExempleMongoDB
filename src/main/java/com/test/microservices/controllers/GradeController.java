@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.microservices.dto.GradeDto;
 import com.test.microservices.mappers.GradeDtoToGrade;
 import com.test.microservices.pojos.Grade;
-import com.test.microservices.repositories.GradesRepository;
+import com.test.microservices.repositories.GradeRepository;
 
 @RestController
 public class GradeController {
 	GradeDtoToGrade mapper;
-	GradesRepository objetRepo;
-	public GradeController(GradesRepository repo,GradeDtoToGrade m) {
+	GradeRepository objetRepo;
+	public GradeController(GradeRepository repo,GradeDtoToGrade m) {
 		this.objetRepo=repo;
 		this.mapper=m;
 		// TODO Auto-generated constructor stub

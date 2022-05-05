@@ -170,7 +170,7 @@ public void run(String... args) throws ParseException {
 
 
 
-classe de recherche de pays
+// champions vers pays
 
 
 
@@ -270,7 +270,130 @@ public class Verification_Liens {
 }
 
 
+//   ----------------- champions vers grades
 
+
+
+package com.test.microservices;
+
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.test.microservices.pojos.*;
+import com.test.microservices.repositories.*;
+@Component
+public class Verification_Liens {
+	public Verification_Liens(ChampionRepository s,GradeRepository d) {
+		this.destRepo=d;
+		this.srcRepo=s;
+		try {
+			document = new Document();
+			PdfWriter.getInstance(document, new FileOutputStream("./Rapports/Champion_vers_Grade.pdf"));
+			document.open();
+			document.addTitle("Rapport");
+		    document.addSubject("verifier la validite des references");
+		    document.addKeywords("Java, PDF, iText, Spring");
+		    document.addAuthor("GONSALLO Ayrton");
+		    document.addCreator("GONSALLO Ayrton");
+		    table = new PdfPTable(4);
+		    table.setWidths(new int[]{1,2, 3, 3});
+		    PdfPCell c1 = new PdfPCell(new Phrase("match n°"));
+	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(c1);
+		    c1 = new PdfPCell(new Phrase("Id Champion"));
+	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(c1);
+	        c1 = new PdfPCell(new Phrase("Grade d'origine"));
+	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(c1);
+	        c1 = new PdfPCell(new Phrase("Grade trouvé"));
+	        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(c1);
+	        table.setHeaderRows(1);
+			font = FontFactory.getFont(FontFactory.COURIER, 24, Font.BOLD);
+			font3 = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.GREEN);
+			
+			font1 = FontFactory.getFont(FontFactory.COURIER, 18, BaseColor.RED);
+			font2 = FontFactory.getFont(FontFactory.COURIER, 12, BaseColor.BLUE);
+			document.add(new Chunk("Champion vers Grade:", font).setUnderline(0.1f, -2f));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	Font font, font1,font2,font3;
+	Document document;
+	PdfPTable table;
+	ChampionRepository srcRepo;
+	GradeRepository destRepo;
+	int trouves;
+	int nontrouves;
+ public void check() throws Exception{
+	 List<Champion> tous=srcRepo.findAll();
+	 Pattern pattern = Pattern.compile("^[0-9]+$");
+	 
+	 for(Champion element:tous) {
+		 if(element.getGrade()!=null) {
+			 Matcher matcher = pattern.matcher(element.getGrade());
+			 if(matcher.find()) {
+				 if(destRepo.existsById(Integer.valueOf(element.getGrade()) )) {
+					 Grade liste=destRepo.findById(Integer.valueOf(element.getGrade()));
+					 table.addCell(String.valueOf(trouves));
+					 table.addCell(String.valueOf(element.getId()));
+					 table.addCell(element.getGrade());
+					 table.addCell(liste.getNom());
+					 trouves++;
+				 }
+			 }else {
+				 if(!(element.getGrade().equals("")) &&destRepo.existsByNom(element.getGrade())) {
+					 List<Grade> liste=destRepo.findByNom(element.getGrade());
+					 table.addCell(String.valueOf(trouves));
+					 table.addCell(String.valueOf(element.getId()));
+					 table.addCell(element.getGrade());
+					 String grades="Correspondants: ";
+					 
+					 for(Grade g:liste) {
+						 grades+=g.getNom()+", ";
+					 }
+					 table.addCell(String.valueOf(grades));
+					 trouves++;
+				 }
+				 else {
+					 nontrouves++;
+					 
+					 
+				 }
+			 }
+		 }
+		 
+		 
+	 }
+	 document.add(new Paragraph("Elements non trouvés:  ", font3));
+	 document.add(new Paragraph("\n", font3));
+	 document.add(table);
+	document.add(new Paragraph("total trouvés:  "+trouves+" / "+tous.size(), font1));
+	document.add(new Paragraph(StringUtils.repeat(" ", 5)+StringUtils.repeat("-", 30)+StringUtils.repeat(" ", 5), font));
+	document.close();
+	 System.out.println("traitement fini et document exporté!");
+ }
+}
 
 
 
@@ -308,6 +431,8 @@ System.out.println("Tous les rest controllers ont étés exposés !");
 	
 	
 mercredi 04/05/2022  creation des relations DocumentReference
+
+
 package com.test.microservices;
 
 
@@ -414,3 +539,36 @@ public void getAndDisplayClients() {
 }
 
 }
+
+
+
+
+
+
+//---------------- evresultat vers champion
+
+EvresultatRepository srcRepo;
+	ChampionRepository destRepo;
+	public Liaison(EvresultatRepository s, ChampionRepository dest) {
+		this.srcRepo = s;
+		this.destRepo = dest;
+	}
+	public void creer() {
+		System.out.println("Creation de liens entre Evresultat et Champion en cours...");
+
+		int trouves=0;
+		int nontrouves=0;
+		List<Evresultat>liste=srcRepo.findAll();
+		for(Evresultat element:liste) {
+			if(destRepo.existsById(element.getChampionID())) {
+				Champion c=destRepo.findById(element.getChampionID());
+				element.setChampion2(c);
+				trouves++;
+			}else{
+				element.setChampion2(null);
+				nontrouves++;
+			}
+			srcRepo.save(element);
+		}
+		System.out.println("Creation de liens entre Evresultat et Champion finie trouves: "+trouves+" non trouves: "+nontrouves+"...");
+	}

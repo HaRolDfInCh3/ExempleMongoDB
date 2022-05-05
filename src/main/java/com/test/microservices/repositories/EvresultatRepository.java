@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.test.microservices.pojos.Evresultat;
 
-public interface EvresultatsRepository extends MongoRepository<Evresultat, String> {
+public interface EvresultatRepository extends MongoRepository<Evresultat, String> {
 	public Evresultat findById(int id2);
 	public Boolean existsById(int id2);
 	public Evresultat findByIdMongo(String idMongo);
