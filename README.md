@@ -39,3 +39,4 @@ db.champion_popularite.find({"date" : "0000-00-00 00:00:00"},{})
 
 // regex caracteres speciaux
 {"Grade" : {$regex:"\\?\\?", '$options' : 'i'}}
+db.clubs.updateMany({"Valide" :1},{$set:{"Valide" : true}})
